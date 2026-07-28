@@ -21,17 +21,21 @@ public class ReportsResourceIT {
     ReportsResourceClient rut;
 
     @Test
-    void fetchIBAN(){
+    void fetchIBANs(){
+        //initial fetch, the list can be empty
         var response = this.rut.accounts();
         assertThat(response.getStatus()).isBetween(200, 204);
         
-        var iban = UUID.randomUUID().toString();
-        accountDelegate.initialCreationAndFetch(iban, 42);
+        //new account created
+        var createdAccountIBAN = UUID.randomUUID().toString();
+        accountDelegate.initialCreationAndFetch(createdAccountIBAN, 42);
 
         response = this.rut.accounts();
         assertThat(response.getStatus()).isEqualTo(200);
         var ibanList = response.readEntity(String.class);
-        assertThat(ibanList).contains(iban);
+
+        //the list should include the iban of the created account
+        assertThat(ibanList).contains(createdAccountIBAN);
     }
 
 }
