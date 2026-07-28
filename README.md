@@ -1,5 +1,24 @@
 # ebank
 
+<!-- sbce:generated:start — projection of the specs; do not edit; `apply` regenerates from the system doc + per-BC package docs -->
+> A banking API of cooperating business components for account creation, transaction processing, and reporting.
+
+**Vision:** A banking core so simple and observable that every behavior is explainable from the code alone.
+
+## Capabilities
+- **accounting** — own the account lifecycle: initial creation with validation and balance lookup · [`spec`](ebank/src/main/java/airhacks/ebank/accounting/package-info.java)
+- **transactions** — apply deposit and debit transactions to existing accounts · [`spec`](ebank/src/main/java/airhacks/ebank/transactions/package-info.java)
+- **reporting** — read-only extraction of account data for administrative oversight · [`spec`](ebank/src/main/java/airhacks/ebank/reporting/package-info.java)
+
+## Components
+<!-- projection of the system doc's ## Components wiring; never inferred from code -->
+```mermaid
+flowchart LR
+  transactions --> accounting
+  reporting -.->|reads| accounting
+```
+<!-- sbce:generated:end -->
+
 A banking API implemented with MicroProfile, powered with Quarkus, demonstrating Java 21+ features. The application provides account management and transaction processing capabilities with a focus on simplicity, observability, and testability.
 
 

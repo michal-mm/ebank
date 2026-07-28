@@ -1,6 +1,14 @@
 package airhacks.ebank.accounting.boundary;
 
+import static airhacks.ebank.accounting.Requirement.Rn.R1_1;
+import static airhacks.ebank.accounting.Requirement.Rn.R1_2;
+import static airhacks.ebank.accounting.Requirement.Rn.R1_3;
+import static airhacks.ebank.accounting.Requirement.Rn.R1_4;
+import static airhacks.ebank.accounting.Requirement.Rn.R2_1;
+import static airhacks.ebank.accounting.Requirement.Rn.R2_2;
+
 import airhacks.ebank.Boundary;
+import airhacks.ebank.accounting.Requirement;
 import airhacks.ebank.accounting.control.AccountCreationResult.AlreadyExists;
 import airhacks.ebank.accounting.control.AccountCreationResult.Created;
 import airhacks.ebank.accounting.control.AccountCreationResult.Invalid;
@@ -36,6 +44,7 @@ public class AccountsResource {
 
     @GET
     @Path("{iban}")
+    @Requirement({R2_1, R2_2})
     public Response account(@PathParam("iban") String iban) {
         this.log.info("get account " + iban);
         return this.finder
@@ -45,6 +54,7 @@ public class AccountsResource {
     }
 
     @POST
+    @Requirement({R1_1, R1_2, R1_3, R1_4})
     public Response initialCreation(Account account){
         this.log.info("initialCreation " + account);
         var result = this.processor.initialCreation(account);
