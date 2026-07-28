@@ -1,9 +1,15 @@
 package airhacks.ebank.transactions.boundary;
 
+import static airhacks.ebank.transactions.Requirement.Rn.R1_1;
+import static airhacks.ebank.transactions.Requirement.Rn.R1_2;
+import static airhacks.ebank.transactions.Requirement.Rn.R1_3;
+import static airhacks.ebank.transactions.Requirement.Rn.R1_4;
+
 import airhacks.ebank.Boundary;
 import airhacks.ebank.accounting.boundary.TransactionCarrier;
 import airhacks.ebank.accounting.control.Responses;
 import airhacks.ebank.logging.control.EBLog;
+import airhacks.ebank.transactions.Requirement;
 import airhacks.ebank.transactions.control.TransactionProcessor;
 import airhacks.ebank.transactions.entity.Transaction;
 import jakarta.inject.Inject;
@@ -30,6 +36,7 @@ public class TransactionsResource {
 
     @POST
     @Path("/{iban}/")
+    @Requirement({R1_1, R1_2, R1_3, R1_4})
     public Response processTransaction(@PathParam("iban") String iban,TransactionCarrier serializedTransaction) {
         this.log.info("processTransaction " + iban);
         var transaction = Transaction.from(serializedTransaction);
