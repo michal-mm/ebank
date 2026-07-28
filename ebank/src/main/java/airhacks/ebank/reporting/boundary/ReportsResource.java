@@ -1,5 +1,9 @@
 package airhacks.ebank.reporting.boundary;
 
+import static airhacks.ebank.reporting.Requirement.Rn.R1_1;
+import static airhacks.ebank.reporting.Requirement.Rn.R1_2;
+
+import airhacks.ebank.reporting.Requirement;
 import airhacks.ebank.reporting.control.AccountQuery;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
@@ -20,6 +24,7 @@ public class ReportsResource {
      */
     @GET
     @Path("accounts")
+    @Requirement({R1_1, R1_2})
     public Response accounts() {
         var allAccounts = this.accounts.asIBANs();
         if (allAccounts.isEmpty())
