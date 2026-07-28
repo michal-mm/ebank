@@ -1,7 +1,5 @@
 package airhacks.ebank.accounting.boundary;
 
-import org.eclipse.microprofile.metrics.annotation.Timed;
-
 import airhacks.ebank.Boundary;
 import airhacks.ebank.accounting.control.AccountCreationResult.AlreadyExists;
 import airhacks.ebank.accounting.control.AccountCreationResult.Created;
@@ -11,7 +9,6 @@ import airhacks.ebank.accounting.control.Responses;
 import airhacks.ebank.accounting.entity.Account;
 import airhacks.ebank.logging.control.EBLog;
 import airhacks.ebank.transactions.control.TransactionProcessor;
-import airhacks.ebank.transactions.entity.Transaction;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -39,7 +36,6 @@ public class AccountsResource {
 
     @GET
     @Path("{iban}")
-    @Timed
     public Response account(@PathParam("iban") String iban) {
         this.log.info("get account " + iban);
         return this.finder
