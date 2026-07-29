@@ -9,6 +9,7 @@
 - **accounting** — own the account lifecycle: initial creation with validation and balance lookup · [`spec`](ebank/src/main/java/airhacks/ebank/accounting/package-info.java)
 - **transactions** — apply deposit and debit transactions to existing accounts · [`spec`](ebank/src/main/java/airhacks/ebank/transactions/package-info.java)
 - **reporting** — read-only extraction of account data for administrative oversight · [`spec`](ebank/src/main/java/airhacks/ebank/reporting/package-info.java)
+- **customers** — own the customer lifecycle and the ownership of accounts · [`spec`](ebank/src/main/java/airhacks/ebank/customers/package-info.java)
 
 ## Components
 <!-- projection of the system doc's ## Components wiring; never inferred from code -->
@@ -16,6 +17,7 @@
 flowchart LR
   transactions --> accounting
   reporting -.->|reads| accounting
+  customers --> accounting
 ```
 <!-- sbce:generated:end -->
 
