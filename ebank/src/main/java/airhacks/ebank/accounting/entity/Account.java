@@ -13,9 +13,9 @@ import jakarta.persistence.Id;
 public class Account {
 
     @Id
-    @Schema(required = true, example = "2")
+    @Schema(required = true, examples = "2")
     public String iban;
-    @Schema(required = true, example = "42")
+    @Schema(required = true, examples = "42")
     public BigDecimal balance;
 
     protected Account() {
