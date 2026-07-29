@@ -4,7 +4,6 @@ package airhacks.ebank.transactions.control;
 import java.util.Optional;
 
 import airhacks.ebank.Control;
-import airhacks.ebank.accounting.control.AccountCreationResult;
 import airhacks.ebank.accounting.control.AccountFinder;
 import airhacks.ebank.accounting.entity.Account;
 import airhacks.ebank.transactions.entity.Transaction;
@@ -33,19 +32,5 @@ public class TransactionProcessor {
             case Transaction.Deposit deposit -> account.deposit(deposit.amount());
         };
 
-    }
-
-    public AccountCreationResult initialCreation(Account account) {
-        if (!this.isValidForCreation(account))
-            return new AccountCreationResult.Invalid(account);
-        if (this.finder.exists(account))
-            return new AccountCreationResult.AlreadyExists(account);
-        this.em.persist(account);
-        return new AccountCreationResult.Created(account);
-    }
-
-    boolean isValidForCreation(Account account) {
-        return account.isBalancePositive()
-                && (account.balance() < 1000);
     }
 }

@@ -12,11 +12,11 @@ import airhacks.ebank.accounting.Requirement;
 import airhacks.ebank.accounting.control.AccountCreationResult.AlreadyExists;
 import airhacks.ebank.accounting.control.AccountCreationResult.Created;
 import airhacks.ebank.accounting.control.AccountCreationResult.Invalid;
+import airhacks.ebank.accounting.control.AccountCreator;
 import airhacks.ebank.accounting.control.AccountFinder;
 import airhacks.ebank.accounting.control.Responses;
 import airhacks.ebank.accounting.entity.Account;
 import airhacks.ebank.logging.control.EBLog;
-import airhacks.ebank.transactions.control.TransactionProcessor;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -34,7 +34,7 @@ import jakarta.ws.rs.core.Response;
 public class AccountsResource {
 
     @Inject
-    TransactionProcessor processor;
+    AccountCreator creator;
 
     @Inject
     AccountFinder finder;
@@ -57,7 +57,7 @@ public class AccountsResource {
     @Requirement({R1_1, R1_2, R1_3, R1_4})
     public Response initialCreation(Account account){
         this.log.info("initialCreation " + account);
-        var result = this.processor.initialCreation(account);
+        var result = this.creator.initialCreation(account);
         return switch(result){
             case Created created -> Responses.created(created);
             case AlreadyExists exists -> Responses.alreadyExists(exists);
