@@ -21,7 +21,7 @@ flowchart LR
 ```
 <!-- sbce:generated:end -->
 
-A banking API implemented with MicroProfile, powered with Quarkus, demonstrating Java 21+ features. The application provides account management and transaction processing capabilities with a focus on simplicity, observability, and testability.
+A banking API implemented with MicroProfile, powered by Quarkus, demonstrating Java 25 features. The business components above are specified and converged with the spec-driven BCE workflow (SBCE): each `package-info.java` is the boundary contract, and every requirement statement traces to a test.
 
 
 ## Architecture Philosophy
@@ -50,9 +50,11 @@ mvn quarkus:dev
 ```
 
 ### System Testing
+
+Run against a freshly started application (dev mode recreates the schema on start — see [ebank-st](ebank-st/README.md)):
 ```bash
 cd ebank-st
-mvn failsafe:integration-test
+mvn verify
 ```
 
 ## Technology Stack
@@ -62,7 +64,7 @@ mvn failsafe:integration-test
 - **Jakarta Persistence (JPA)**: Standard ORM for domain object mapping
 - **Jakarta REST**: RESTful web services following industry standards
 - **MicroProfile Health**: Production-ready health check endpoints
-- **MicroProfile Metrics**: Application performance monitoring
+- **MicroProfile OpenAPI**: Schema annotations for API documentation
 
 ## Conventions
 
@@ -70,19 +72,21 @@ This project demonstrates several Java and architectural conventions:
 
 ### Architecture & Design
 - **BCE/ECB Pattern**: [Boundary-Control-Entity pattern](https://bce.design) for clear separation of concerns
-- **Package by Feature**: Components organized by business domain (accounting, bonus, reporting, logging)
+- **Package by Feature**: Components organized by business domain (accounting, transactions, reporting, customers, logging)
 - **Domain-Driven Package Naming**: Packages named after their responsibilities, not technical layers
 - **Custom Stereotype Annotations**: `@Boundary` annotation combining `@ApplicationScoped` and `@Transactional`
 
 ### Code Organization
-- **Package-info Files**: Documentation at package level describing domain responsibilities
+- **Capability Specs**: each BC's `package-info.java` carries its EARS requirements as the boundary contract (SBCE)
+- **Requirements Traceability**: generated per-BC `@Requirement` annotation binds boundary methods and tests to statement ids
 - **Package-Private Visibility**: Preferred over private fields
 - **Meaningful Names**: Classes named after responsibilities, avoiding generic suffixes (*Impl, *Service, *Manager)
 
-### Java 21+ Features
-- **Records**: Immutable data carriers (`AccountCreationResult`, `BonusResult`)
-- **Sealed Interfaces**: `Transaction` interface with controlled implementations
-- **Pattern Matching**: Enhanced switch expressions for type-safe handling
+### Java 25 Features
+- **Records**: Immutable data carriers (`AccountCreationResult`, `OwnershipResult`)
+- **Sealed Interfaces**: `Transaction` and result types with controlled implementations
+- **Pattern Matching**: Enhanced switch expressions with unnamed patterns for type-safe handling
+- **Markdown Doc Comments**: `///` (JEP 467) package docs render the specs via javadoc
 - **var Keyword**: Local variable type inference for cleaner code
 
 
@@ -90,7 +94,6 @@ This project demonstrates several Java and architectural conventions:
 - **JAX-RS Resources**: REST endpoints with HTTP verbs
 - **Response Builders**: Centralized response creation with status codes
 - **OpenAPI Annotations**: Schema definitions for API documentation
-- **Metrics Integration**: `@Timed` annotations for performance monitoring
 
 ### Persistence & Data Access
 - **JPA Entities**: Simple entities with public fields
@@ -110,8 +113,9 @@ This project demonstrates several Java and architectural conventions:
 
 ### Testing
 - **AssertJ Library**: Fluent assertions instead of JUnit assertions
+- **Requirement-Traced Tests**: one parameterized test per requirement group, one row per statement id (`R1.1`, …)
 - **Essential Tests Only**: Avoiding repetitive tests, focusing on core functionality
-- **Integration Tests**: Suffix with "IT" for Failsafe plugin execution
+- **System Tests**: black-box suite in [ebank-st](ebank-st/README.md), suffix "IT", executed by Failsafe
 
 ### Code Quality Principles
 - **KISS**: Keep It Simple - simplest possible solutions
