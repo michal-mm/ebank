@@ -21,6 +21,10 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+/// HTTP entry point for applying deposits and debits to an account. Converts
+/// the wire-level [TransactionCarrier] into the sealed [Transaction] before
+/// delegating to [TransactionProcessor], so the domain never sees
+/// serialization concerns.
 @Boundary
 @Path("transactions")
 @Produces(MediaType.APPLICATION_JSON)

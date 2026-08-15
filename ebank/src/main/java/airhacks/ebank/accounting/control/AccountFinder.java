@@ -7,6 +7,9 @@ import airhacks.ebank.accounting.entity.Account;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+/// IBAN-based account lookup, shared across BCs: `transactions` resolves
+/// accounts before applying deposits and debits, `customers` verifies
+/// existence before recording ownership.
 @Control
 public class AccountFinder {
     @PersistenceContext

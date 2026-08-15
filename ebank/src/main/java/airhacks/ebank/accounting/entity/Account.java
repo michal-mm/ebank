@@ -9,6 +9,10 @@ import jakarta.json.bind.annotation.JsonbTransient;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
+/// A bank account with the IBAN as natural primary key. The balance changes
+/// only through [#debit(BigDecimal)] and [#deposit(BigDecimal)];
+/// [#tableName()] is the single source of truth for the native SQL in the
+/// `reporting` BC.
 @Entity
 public class Account {
 

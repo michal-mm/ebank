@@ -7,12 +7,9 @@ import java.lang.annotation.Target;
 
 import jakarta.enterprise.inject.Stereotype;
 
-/**
- * Marks components implementing procedural business logic and workflows.
- * Fully optional.
- *
- * @see <a href="https://bce.design">BCE Pattern</a>
- */
+/// Marks components implementing procedural business logic and workflows,
+/// joining the transaction started by a [Boundary]
+/// ([bce.design](https://bce.design)). Fully optional.
 @Stereotype
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)

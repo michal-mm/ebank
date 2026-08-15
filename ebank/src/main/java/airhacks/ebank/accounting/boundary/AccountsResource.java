@@ -27,6 +27,10 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+/// HTTP entry point for the account lifecycle: initial creation and lookup by
+/// IBAN. All decisions are delegated to [AccountCreator] and [AccountFinder];
+/// the exhaustive switch over the creation result forces every outcome to be
+/// mapped to an HTTP status.
 @Boundary
 @Path("accounts")
 @Produces(MediaType.APPLICATION_JSON)

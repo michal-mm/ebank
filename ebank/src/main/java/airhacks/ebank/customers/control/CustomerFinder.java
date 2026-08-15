@@ -7,6 +7,8 @@ import airhacks.ebank.customers.entity.Customer;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+/// Customer lookup by generated id; also answers the existence check
+/// [AccountOwnership] performs before recording an ownership.
 @Control
 public class CustomerFinder {
     @PersistenceContext

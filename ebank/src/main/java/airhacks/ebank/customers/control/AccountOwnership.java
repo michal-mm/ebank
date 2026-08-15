@@ -9,6 +9,10 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+/// Records which customer owns which account. Customer and account existence
+/// are verified before an [Ownership] is persisted; its IBAN primary key
+/// enforces at most one owner per account (R3.2), while a customer may own any
+/// number of accounts (R3.5).
 @Control
 public class AccountOwnership {
     @PersistenceContext

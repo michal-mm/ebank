@@ -11,6 +11,9 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+/// Applies a transaction to the account behind an IBAN. Debits are applied
+/// unconditionally — the balance may go negative (R1.3); an unknown account
+/// yields absence, not an error (R1.4).
 @Control
 public class TransactionProcessor {
     @PersistenceContext

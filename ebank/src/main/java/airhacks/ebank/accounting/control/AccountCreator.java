@@ -6,6 +6,9 @@ import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 
+/// Decides whether an account may be created: the initial balance must be
+/// positive and below 1000 (the cap on initial deposits deters fraud, R1.3),
+/// and the IBAN must be unused. Only valid accounts reach the persistence layer.
 @Control
 public class AccountCreator {
     @PersistenceContext

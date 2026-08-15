@@ -3,10 +3,9 @@ package airhacks.ebank.logging.control;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
 
-/**
- * Adapter for System.Logger that provides a convenient, domain-specific logging API.
- * Encapsulates the System.Logger, providing and simplified API.
- */
+/// Application-facing façade over [System.Logger]: shrinks the API to the
+/// levels actually used and makes logging injectable via [LogProducer], so
+/// beans never construct loggers themselves.
 public record EBLog(Logger systemLogger) {
 
     public EBLog(Class<?> clazz){

@@ -1,8 +1,6 @@
-/**
- * Injectable logger using Java Platform Logging API.
- * 
- * Provides CDI-based injection of System.Logger instances with automatic
- * logger naming derived from injection point metadata. Centralizes logger
- * creation to ensure consistent naming conventions across the application.
- */
+/// # Logging
+/// > Injectable logger built on the Java Platform Logging API (`System.Logger`).
+///
+/// Logger names derive from the injection point, keeping naming consistent
+/// application-wide without repeated class literals.
 package airhacks.ebank.logging;

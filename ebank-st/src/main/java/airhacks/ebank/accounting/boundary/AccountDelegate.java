@@ -8,10 +8,9 @@ import jakarta.inject.Inject;
 import jakarta.json.JsonObject;
 import jakarta.ws.rs.core.Response;
 
-/**
- * Simplifies system test interactions with the accounts REST API by providing
- * a fluent interface for account operations and maintaining test state.
- */
+/// Stateful test-side companion for account scenarios: remembers the IBAN and
+/// the last response between steps, so a system test reads as
+/// create → deposit → debit without threading state through every call.
 @ApplicationScoped
 public class AccountDelegate {
 

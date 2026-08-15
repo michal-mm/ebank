@@ -12,6 +12,9 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+/// Read-only reporting endpoint: renders the IBANs of all accounts as
+/// plain-text CSV and never mutates state. No `@Boundary` stereotype — no
+/// transaction is needed for pure reads.
 @Path("reports")
 @Produces(MediaType.TEXT_PLAIN)
 public class ReportsResource {
@@ -19,9 +22,6 @@ public class ReportsResource {
     @Inject
     AccountQuery accounts;
 
-    /**
-     * @return ibans as CSV
-     */
     @GET
     @Path("accounts")
     @Requirement({R1_1, R1_2})

@@ -13,10 +13,10 @@ import airhacks.ebank.logging.control.EBLog;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.InternalServerErrorException;
 
-/**
- * Queries account data for reporting purposes.
- * Provides read-only access to account information without modifying state.
- */
+/// Read-only access to `accounting`'s persisted accounts — deliberately via
+/// plain JDBC instead of the entities, so reporting never joins the JPA
+/// persistence context and cannot mutate state. `Account.tableName()` keeps
+/// the SQL aligned with the entity mapping.
 @Control
 public class AccountQuery {
     
@@ -32,12 +32,8 @@ public class AccountQuery {
         """.formatted(tableName());
 
 
-    /**
-     * Retrieves all account identifiers for reporting and listing purposes.
-     *
-     * @return list of IBANs from all accounts in the system
-     * @throws InternalServerErrorException if database access fails
-     */
+    /// @throws InternalServerErrorException on database failure — the JAX-RS
+    ///                                       runtime maps it to HTTP 500
     public List<String> asIBANs(){
         var ibans = new ArrayList<String>();
         try (var con = this.dataSource.getConnection();

@@ -8,6 +8,9 @@ import airhacks.ebank.logging.control.EBLog;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
+/// Liveness probe that always reports up: it only proves the runtime answers
+/// HTTP. Deliberately dependency-free, so an orchestrator never restarts the
+/// instance just because a downstream system is down.
 @Liveness
 @ApplicationScoped
 public class NoOpProbe implements HealthCheck {

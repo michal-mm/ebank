@@ -2,6 +2,9 @@ package airhacks.ebank.accounting.control;
 
 import airhacks.ebank.accounting.entity.Account;
 
+/// Closed set of account-creation outcomes. Sealing lets the boundary switch
+/// exhaustively, so a new outcome breaks compilation instead of silently
+/// falling through to a wrong HTTP status.
 public sealed interface AccountCreationResult permits AccountCreationResult.AlreadyExists,
         AccountCreationResult.Invalid,
         AccountCreationResult.Created {

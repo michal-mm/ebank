@@ -1,5 +1,8 @@
 package airhacks.ebank.customers.control;
 
+/// Closed set of ownership outcomes. Sealing lets the boundary switch
+/// exhaustively, so a new outcome breaks compilation instead of silently
+/// falling through to a wrong HTTP status.
 public sealed interface OwnershipResult permits OwnershipResult.Owned,
         OwnershipResult.AlreadyOwned,
         OwnershipResult.UnknownCustomer,

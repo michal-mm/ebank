@@ -6,6 +6,9 @@ import airhacks.ebank.accounting.control.AccountCreationResult.AlreadyExists;
 import airhacks.ebank.accounting.control.AccountCreationResult.Invalid;
 import jakarta.ws.rs.core.Response;
 
+/// Single place where accounting outcomes become HTTP responses, keeping
+/// status-code knowledge out of the resources. Also reused by the
+/// `transactions` boundary.
 public interface Responses {
     
     static Response created(AccountCreationResult.Created created) {

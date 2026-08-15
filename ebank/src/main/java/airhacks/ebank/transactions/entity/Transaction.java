@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 
 import airhacks.ebank.accounting.boundary.TransactionCarrier;
 
+/// Closed set of transaction kinds. [#from(TransactionCarrier)] is the single
+/// place where the wire format becomes a domain transaction; sealing forces
+/// the processor to handle every kind.
 public sealed interface Transaction permits Transaction.Debit, Transaction.Deposit{
     BigDecimal amount();
     record Debit(BigDecimal amount) implements Transaction {}
