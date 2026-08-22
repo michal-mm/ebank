@@ -6,8 +6,7 @@ import static airhacks.ebank.transactions.Requirement.Rn.R1_3;
 import static airhacks.ebank.transactions.Requirement.Rn.R1_4;
 
 import airhacks.ebank.Boundary;
-import airhacks.ebank.accounting.boundary.TransactionCarrier;
-import airhacks.ebank.accounting.control.Responses;
+import airhacks.ebank.http.control.Responses;
 import airhacks.ebank.logging.control.EBLog;
 import airhacks.ebank.transactions.Requirement;
 import airhacks.ebank.transactions.control.TransactionProcessor;

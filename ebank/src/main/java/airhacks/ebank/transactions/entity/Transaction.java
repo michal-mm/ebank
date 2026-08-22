@@ -2,7 +2,7 @@ package airhacks.ebank.transactions.entity;
 
 import java.math.BigDecimal;
 
-import airhacks.ebank.accounting.boundary.TransactionCarrier;
+import airhacks.ebank.transactions.boundary.TransactionCarrier;
 
 /// Closed set of transaction kinds. [#from(TransactionCarrier)] is the single
 /// place where the wire format becomes a domain transaction; sealing forces
