@@ -15,8 +15,8 @@ public @interface Requirement {
 
     /// One constant per statement id in the spec's `## Requirements`.
     enum Rn {
-        /// When accounts exist, the BC shall return the IBANs of all accounts as a comma-separated list.
-        R1_1("R1.1", "When accounts exist, the BC shall return the IBANs of all accounts as a comma-separated list."),
+        /// When accounts exist, the BC shall return the identifiers of all accounts.
+        R1_1("R1.1", "When accounts exist, the BC shall return the identifiers of all accounts."),
         /// If no accounts exist, then the BC shall indicate absence without error.
         R1_2("R1.2", "If no accounts exist, then the BC shall indicate absence without error.");
 

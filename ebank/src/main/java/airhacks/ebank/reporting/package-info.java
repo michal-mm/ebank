@@ -3,10 +3,12 @@
 ///
 /// ## Boundary
 /// - `report-account-ibans` — list the identifiers of all accounts
+///   - HTTP: `GET /reports/accounts` — comma-separated plain text
+///   - MCP: `list_account_ibans` — JSON array of IBANs
 ///
 /// ## Requirements
 /// ### R1: Report account identifiers
-/// - R1.1 — When accounts exist, the BC shall return the IBANs of all accounts as a comma-separated list.
+/// - R1.1 — When accounts exist, the BC shall return the identifiers of all accounts.
 /// - R1.2 — If no accounts exist, then the BC shall indicate absence without error.
 ///
 /// ## Out of scope
