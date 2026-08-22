@@ -14,8 +14,8 @@ import airhacks.ebank.accounting.control.AccountCreationResult.Created;
 import airhacks.ebank.accounting.control.AccountCreationResult.Invalid;
 import airhacks.ebank.accounting.control.AccountCreator;
 import airhacks.ebank.accounting.control.AccountFinder;
-import airhacks.ebank.accounting.control.Responses;
 import airhacks.ebank.accounting.entity.Account;
+import airhacks.ebank.http.control.Responses;
 import airhacks.ebank.logging.control.EBLog;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
@@ -63,9 +63,9 @@ public class AccountsResource {
         this.log.info("initialCreation " + account);
         var result = this.creator.initialCreation(account);
         return switch(result){
-            case Created created -> Responses.created(created);
-            case AlreadyExists exists -> Responses.alreadyExists(exists);
-            case Invalid invalid -> Responses.invalid(invalid);
+            case Created created -> CreationResponses.created(created);
+            case AlreadyExists exists -> CreationResponses.alreadyExists(exists);
+            case Invalid invalid -> CreationResponses.invalid(invalid);
         };
     }
 
