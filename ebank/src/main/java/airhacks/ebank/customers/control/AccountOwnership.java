@@ -1,9 +1,11 @@
 package airhacks.ebank.customers.control;
 
 import java.util.List;
+import java.util.Optional;
 
 import airhacks.ebank.Control;
 import airhacks.ebank.accounting.control.AccountFinder;
+import airhacks.ebank.customers.entity.Customer;
 import airhacks.ebank.customers.entity.Ownership;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
@@ -33,6 +35,18 @@ public class AccountOwnership {
             return new OwnershipResult.AlreadyOwned(iban);
         this.em.persist(new Ownership(iban, customerId));
         return new OwnershipResult.Owned(customerId, iban);
+    }
+
+    /// Resolves an account's owner for `accounting`'s account summary — the
+    /// inverse of [#ownedAccounts(long)], and the only read `accounting` needs
+    /// to avoid touching [Ownership] itself.
+    ///
+    /// @return the owning customer, or empty when the account is unowned or
+    ///         unknown — both are normal states, not errors
+    public Optional<Customer> owner(String iban) {
+        return Optional.ofNullable(this.em.find(Ownership.class, iban))
+                .map(ownership -> ownership.customerId)
+                .flatMap(this.customers::customer);
     }
 
     public List<String> ownedAccounts(long customerId) {

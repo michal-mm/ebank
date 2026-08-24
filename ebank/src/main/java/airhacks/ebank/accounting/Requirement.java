@@ -26,7 +26,15 @@ public @interface Requirement {
         /// When a known IBAN is requested, the BC shall return the account with its IBAN and balance.
         R2_1("R2.1", "When a known IBAN is requested, the BC shall return the account with its IBAN and balance."),
         /// If the IBAN is unknown, then the BC shall indicate absence without error.
-        R2_2("R2.2", "If the IBAN is unknown, then the BC shall indicate absence without error.");
+        R2_2("R2.2", "If the IBAN is unknown, then the BC shall indicate absence without error."),
+        /// When a known IBAN is submitted, the BC shall return a summary carrying the account's IBAN, the account's balance, and the owning customer's id and name.
+        R3_1("R3.1", "When a known IBAN is submitted, the BC shall return a summary carrying the account's IBAN, the account's balance, and the owning customer's id and name."),
+        /// If the account has no owner, then the BC shall return the summary and state that no customer owns the account.
+        R3_2("R3.2", "If the account has no owner, then the BC shall return the summary and state that no customer owns the account."),
+        /// If the IBAN is unknown, then the BC shall indicate absence without error, phrased as a sentence.
+        R3_3("R3.3", "If the IBAN is unknown, then the BC shall indicate absence without error, phrased as a sentence."),
+        /// While summarizing, the BC shall leave every account and ownership unchanged.
+        R3_4("R3.4", "While summarizing, the BC shall leave every account and ownership unchanged.");
 
         private final String id;
         private final String statement;
