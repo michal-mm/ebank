@@ -11,7 +11,7 @@ import jakarta.ws.rs.core.Response;
 /// Translates the sealed [airhacks.ebank.accounting.control.AccountCreationResult]
 /// into HTTP status codes. Accounting-specific and therefore owned by this
 /// boundary; the status-code plumbing itself comes from [Responses].
-interface CreationResponses {
+public interface CreationResponses {
 
     static Response created(Created created) {
         var iban = created.account().iban();
