@@ -6,7 +6,7 @@ import java.util.Optional;
 import airhacks.ebank.Control;
 import airhacks.ebank.accounting.control.AccountFinder;
 import airhacks.ebank.accounting.entity.Account;
-import airhacks.ebank.transactions.entity.Transaction;
+import airhacks.ebank.HEX_core.domain.Transaction;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
