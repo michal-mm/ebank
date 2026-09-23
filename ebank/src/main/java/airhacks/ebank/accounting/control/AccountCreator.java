@@ -1,6 +1,7 @@
 package airhacks.ebank.accounting.control;
 
 import airhacks.ebank.Control;
+import airhacks.ebank.HEX_core.domain.AccountCreationResult;
 import airhacks.ebank.accounting.entity.Account;
 import jakarta.inject.Inject;
 import jakarta.persistence.EntityManager;

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import airhacks.ebank.Control;
+import airhacks.ebank.HEX_core.domain.OwnershipResult;
 import airhacks.ebank.accounting.control.AccountFinder;
 import airhacks.ebank.customers.entity.Customer;
 import airhacks.ebank.customers.entity.Ownership;

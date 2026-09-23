@@ -9,7 +9,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import airhacks.ebank.Control;
-import airhacks.ebank.logging.control.EBLog;
+import airhacks.ebank.HEX_shared.logging.EBLog;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.InternalServerErrorException;
 
@@ -38,7 +38,7 @@ public class AccountQuery {
         var ibans = new ArrayList<String>();
         try (var con = this.dataSource.getConnection();
              var stmt = con.prepareStatement(sql);
-             var rs = stmt.executeQuery();) {
+             var rs = stmt.executeQuery()) {
             
             while (rs.next()) {
                 ibans.add(rs.getString("iban"));
