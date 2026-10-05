@@ -1,11 +1,12 @@
 package airhacks.ebank.HEX_adapter.in.rest.reporting;
 
-import static airhacks.ebank.reporting.Requirement.Rn.R1_1;
-import static airhacks.ebank.reporting.Requirement.Rn.R1_2;
+import static airhacks.ebank.HEX_adapter.out.accounting.Requirement.Rn.R1_1;
+import static airhacks.ebank.HEX_adapter.out.accounting.Requirement.Rn.R1_2;
 
+import airhacks.ebank.HEX_core.ports.out.AccountReadOutPort;
 import airhacks.ebank.HEX_core.usecase.ReportingUc;
-import airhacks.ebank.reporting.Requirement;
-import airhacks.ebank.reporting.control.AccountQuery;
+import airhacks.ebank.HEX_adapter.out.accounting.Requirement;
+import airhacks.ebank.HEX_adapter.out.accounting.AccountQuery;
 import io.quarkiverse.mcp.server.Tool;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -23,7 +24,7 @@ import jakarta.json.Json;
 public class ReportsTool {
 
     @Inject
-    AccountQuery accounts;
+    AccountReadOutPort accountsReadOutPort;
 
     /// @return a JSON array of IBANs, or a sentence when the bank holds no
     ///         accounts — the caller is a language model, so absence reads
@@ -39,7 +40,7 @@ public class ReportsTool {
                     openWorldHint = false))
     @Requirement({ R1_1, R1_2 })
     public String listAccountIBANs() {
-        var ibans = this.accounts.asIBANs();
+        var ibans = this.accountsReadOutPort.asIBANs();
         if (ibans.isEmpty())
             return "The bank holds no accounts.";
         return Json.createArrayBuilder(ibans)

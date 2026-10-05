@@ -1,4 +1,4 @@
-package airhacks.ebank.reporting.control;
+package airhacks.ebank.HEX_adapter.out.accounting;
 
 import static airhacks.ebank.accounting.entity.Account.tableName;
 
@@ -9,6 +9,7 @@ import java.util.List;
 import javax.sql.DataSource;
 
 import airhacks.ebank.Control;
+import airhacks.ebank.HEX_core.ports.out.AccountReadOutPort;
 import airhacks.ebank.HEX_shared.logging.EBLog;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.InternalServerErrorException;
@@ -18,7 +19,7 @@ import jakarta.ws.rs.InternalServerErrorException;
 /// persistence context and cannot mutate state. `Account.tableName()` keeps
 /// the SQL aligned with the entity mapping.
 @Control
-public class AccountQuery {
+public class AccountQuery implements AccountReadOutPort {
     
     @Inject
     DataSource dataSource;
@@ -34,6 +35,7 @@ public class AccountQuery {
 
     /// @throws InternalServerErrorException on database failure — the JAX-RS
     ///                                       runtime maps it to HTTP 500
+    @Override
     public List<String> asIBANs(){
         var ibans = new ArrayList<String>();
         try (var con = this.dataSource.getConnection();

@@ -14,4 +14,4 @@
 /// ## Out of scope
 /// - Aggregations, balances, and any report beyond the IBAN list.
 /// - Mutating account data (owned by `accounting` and `transactions`).
-package airhacks.ebank.reporting;
+package airhacks.ebank.HEX_adapter.out.accounting;

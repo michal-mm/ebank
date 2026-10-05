@@ -1,4 +1,4 @@
-package airhacks.ebank.reporting;
+package airhacks.ebank.HEX_adapter.out.accounting;
 
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
@@ -6,7 +6,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-/// Generated from the capability spec in [airhacks.ebank.reporting] — do not edit.
+/// Generated from the capability spec in [airhacks.ebank.HEX_adapter.out.accounting] — do not edit.
 /// Marks the boundary method or test that realizes the given requirement statements.
 @Documented
 @Target(ElementType.METHOD)
