@@ -17,4 +17,4 @@
 /// ## Out of scope
 /// - Amount validation (negative or zero amounts are applied as given).
 /// - Transaction history, auditing, and transfers between accounts.
-package airhacks.ebank.transactions;
+package airhacks.ebank.HEX_adapter.in.rest.transaction;

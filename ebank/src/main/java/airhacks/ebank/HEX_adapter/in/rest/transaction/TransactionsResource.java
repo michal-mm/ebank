@@ -1,14 +1,13 @@
 package airhacks.ebank.HEX_adapter.in.rest.transaction;
 
-import static airhacks.ebank.transactions.Requirement.Rn.R1_1;
-import static airhacks.ebank.transactions.Requirement.Rn.R1_2;
-import static airhacks.ebank.transactions.Requirement.Rn.R1_3;
-import static airhacks.ebank.transactions.Requirement.Rn.R1_4;
+import static airhacks.ebank.HEX_adapter.in.rest.transaction.Requirement.Rn.R1_1;
+import static airhacks.ebank.HEX_adapter.in.rest.transaction.Requirement.Rn.R1_2;
+import static airhacks.ebank.HEX_adapter.in.rest.transaction.Requirement.Rn.R1_3;
+import static airhacks.ebank.HEX_adapter.in.rest.transaction.Requirement.Rn.R1_4;
 
 import airhacks.ebank.Boundary;
 import airhacks.ebank.HEX_core.ports.in.TransactionInPort;
 import airhacks.ebank.HEX_shared.logging.EBLog;
-import airhacks.ebank.transactions.Requirement;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
