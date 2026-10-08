@@ -1,7 +1,5 @@
 package airhacks.ebank.HEX_core.domain;
 
-import airhacks.ebank.accounting.entity.Account;
-
 /// Closed set of account-creation outcomes. Sealing lets the boundary switch
 /// exhaustively, so a new outcome breaks compilation instead of silently
 /// falling through to a wrong HTTP status.

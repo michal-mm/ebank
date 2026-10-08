@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import airhacks.ebank.Control;
 import airhacks.ebank.HEX_core.domain.OwnershipResult;
-import airhacks.ebank.accounting.control.AccountFinder;
+import airhacks.ebank.HEX_core.ports.out.AccountPersistenceOutPort;
 import airhacks.ebank.customers.entity.Customer;
 import airhacks.ebank.customers.entity.Ownership;
 import jakarta.inject.Inject;
@@ -25,12 +25,12 @@ public class AccountOwnership {
     CustomerFinder customers;
 
     @Inject
-    AccountFinder accounts;
+    AccountPersistenceOutPort accounts;
 
     public OwnershipResult own(long customerId, String iban) {
         if (!this.customers.exists(customerId))
             return new OwnershipResult.UnknownCustomer(customerId);
-        if (this.accounts.account(iban).isEmpty())
+        if (this.accounts.findByIban(iban).isEmpty())
             return new OwnershipResult.UnknownAccount(iban);
         if (this.em.find(Ownership.class, iban) != null)
             return new OwnershipResult.AlreadyOwned(iban);

@@ -1,34 +1,28 @@
 package airhacks.ebank.HEX_core.usecase;
 
+import airhacks.ebank.HEX_core.domain.Account;
 import airhacks.ebank.HEX_core.domain.Transaction;
 import airhacks.ebank.HEX_core.ports.in.TransactionInPort;
+import airhacks.ebank.HEX_core.ports.out.AccountPersistenceOutPort;
 import airhacks.ebank.HEX_shared.Responses;
-import airhacks.ebank.accounting.control.AccountFinder;
-import airhacks.ebank.accounting.entity.Account;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
 import jakarta.ws.rs.core.Response;
 
 import java.util.Optional;
 
-/// Orchestrates the transaction use case: find account and process transaction
-/// and maps the optional result to an HTTP response. No wire-format concerns
-/// live here — the DTO-to-domain mapping happens in the adapter before this
-/// port is called.
+/// Orchestrates the transaction use case: finds the account, applies the
+/// transaction, and persists the result. No wire-format concerns live here —
+/// the DTO-to-domain mapping happens in the adapter before this port is called.
 @ApplicationScoped
 public class TransactionsManagementUc implements TransactionInPort {
 
-    @PersistenceContext
-    EntityManager em;
-
     @Inject
-    AccountFinder finder;
+    AccountPersistenceOutPort persistence;
 
     @Override
     public Response processTransaction(String iban, Transaction transaction) {
-        return findAccountAndProcessTransaction(iban, transaction)
+        return findAccountAndProcess(iban, transaction)
                 .map(Responses::ok)
                 .orElseGet(Responses::noContent);
     }
@@ -41,10 +35,9 @@ public class TransactionsManagementUc implements TransactionInPort {
         };
     }
 
-    private Optional<Account> findAccountAndProcessTransaction(String iban, Transaction transaction) {
-        return this.finder.account(iban)
+    private Optional<Account> findAccountAndProcess(String iban, Transaction transaction) {
+        return persistence.findByIban(iban)
                 .map(a -> applyTransaction(a, transaction))
-                .map(this.em::merge);
-
+                .map(persistence::merge);
     }
 }

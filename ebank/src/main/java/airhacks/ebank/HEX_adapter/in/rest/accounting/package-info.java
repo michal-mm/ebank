@@ -34,4 +34,4 @@
 /// - Account closure, deletion, and updates outside transaction processing.
 /// - Debit and deposit processing (owned by `transactions`).
 /// - Assigning, changing, and removing ownership (owned by `customers`); `summarize-account` reads ownership and never alters it.
-package airhacks.ebank.accounting;
+package airhacks.ebank.HEX_adapter.in.rest.accounting;

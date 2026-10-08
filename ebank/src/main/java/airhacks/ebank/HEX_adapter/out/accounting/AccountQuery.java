@@ -1,6 +1,6 @@
 package airhacks.ebank.HEX_adapter.out.accounting;
 
-import static airhacks.ebank.accounting.entity.Account.tableName;
+import static airhacks.ebank.HEX_core.domain.Account.tableName;
 
 import java.sql.SQLException;
 import java.util.ArrayList;

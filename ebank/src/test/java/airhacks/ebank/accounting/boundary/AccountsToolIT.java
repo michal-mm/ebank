@@ -1,9 +1,9 @@
 package airhacks.ebank.accounting.boundary;
 
-import static airhacks.ebank.accounting.Requirement.Rn.R3_1;
-import static airhacks.ebank.accounting.Requirement.Rn.R3_2;
-import static airhacks.ebank.accounting.Requirement.Rn.R3_3;
-import static airhacks.ebank.accounting.Requirement.Rn.R3_4;
+import static airhacks.ebank.HEX_adapter.in.rest.accounting.Requirement.Rn.R3_1;
+import static airhacks.ebank.HEX_adapter.in.rest.accounting.Requirement.Rn.R3_2;
+import static airhacks.ebank.HEX_adapter.in.rest.accounting.Requirement.Rn.R3_3;
+import static airhacks.ebank.HEX_adapter.in.rest.accounting.Requirement.Rn.R3_4;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 
@@ -12,16 +12,16 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 import airhacks.ebank.HEX_adapter.in.rest.accounting.AccountsTool;
+import airhacks.ebank.HEX_core.ports.in.AccountingInPort;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import airhacks.ebank.accounting.Requirement;
-import airhacks.ebank.accounting.control.AccountCreator;
-import airhacks.ebank.accounting.control.AccountFinder;
-import airhacks.ebank.accounting.entity.Account;
+import airhacks.ebank.HEX_adapter.in.rest.accounting.Requirement;
+import airhacks.ebank.HEX_core.ports.out.AccountPersistenceOutPort;
+import airhacks.ebank.HEX_core.domain.Account;
 import airhacks.ebank.customers.control.AccountOwnership;
 import airhacks.ebank.customers.control.CustomerRegistrar;
 import airhacks.ebank.customers.entity.Customer;
@@ -44,10 +44,10 @@ class AccountsToolIT {
     AccountsTool cut;
 
     @Inject
-    AccountCreator accounts;
+    AccountingInPort accountingInPort;
 
     @Inject
-    AccountFinder finder;
+    AccountPersistenceOutPort finder;
 
     @Inject
     CustomerRegistrar customers;
@@ -103,7 +103,7 @@ class AccountsToolIT {
         this.cut.summarizeAccount(iban);
 
         QuarkusTransaction.requiringNew().run(() -> {
-            var account = this.finder.account(iban);
+            var account = this.finder.findByIban(iban);
             assertThat(account).as("R3.4").isPresent();
             assertThat(account.get().balance()).as("R3.4").isEqualTo(BALANCE);
             var stillOwned = this.ownerships.owner(iban);
@@ -114,7 +114,7 @@ class AccountsToolIT {
 
     void createAccount(String iban) {
         QuarkusTransaction.requiringNew()
-                .run(() -> this.accounts.initialCreation(new Account(iban, BigDecimal.valueOf(BALANCE))));
+                .run(() -> this.accountingInPort.initialAccountCreation(new Account(iban, BigDecimal.valueOf(BALANCE))));
     }
 
     Customer registerOwner(String iban) {

@@ -1,7 +1,7 @@
 package airhacks.ebank.HEX_core.ports.in;
 
 import airhacks.ebank.HEX_core.domain.Transaction;
-import airhacks.ebank.accounting.entity.Account;
+import airhacks.ebank.HEX_core.domain.Account;
 import airhacks.ebank.HEX_adapter.in.rest.transaction.Requirement;
 import jakarta.ws.rs.core.Response;
 

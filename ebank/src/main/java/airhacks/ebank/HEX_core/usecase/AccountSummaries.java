@@ -1,9 +1,10 @@
-package airhacks.ebank.accounting.control;
+package airhacks.ebank.HEX_core.usecase;
 
-import airhacks.ebank.Control;
+import airhacks.ebank.HEX_core.domain.Account;
 import airhacks.ebank.HEX_core.domain.AccountSummary;
-import airhacks.ebank.accounting.entity.Account;
+import airhacks.ebank.HEX_core.ports.out.AccountPersistenceOutPort;
 import airhacks.ebank.customers.control.AccountOwnership;
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
 /// Joins an account with its owner into a single [AccountSummary]. The owner
@@ -13,24 +14,23 @@ import jakarta.inject.Inject;
 ///
 /// Both reads are lookups; nothing here writes, which is what keeps R3.4
 /// true for every caller of the summary.
-@Control
+@ApplicationScoped
 public class AccountSummaries {
 
     @Inject
-    AccountFinder accounts;
+    AccountPersistenceOutPort persistence;
 
     @Inject
     AccountOwnership ownerships;
 
     public AccountSummary summary(String iban) {
-        return this.accounts
-                .account(iban)
+        return persistence.findByIban(iban)
                 .map(this::summarize)
                 .orElseGet(() -> new AccountSummary.UnknownAccount(iban));
     }
 
     AccountSummary summarize(Account account) {
-        var owner = this.ownerships.owner(account.iban());
+        var owner = ownerships.owner(account.iban());
         if (owner.isEmpty())
             return new AccountSummary.Unowned(account.iban(), account.balance());
         var customer = owner.get();

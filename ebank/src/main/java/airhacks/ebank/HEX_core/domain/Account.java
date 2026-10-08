@@ -1,25 +1,18 @@
-package airhacks.ebank.accounting.entity;
+package airhacks.ebank.HEX_core.domain;
 
 import java.math.BigDecimal;
 import java.util.Objects;
 
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-
-import jakarta.json.bind.annotation.JsonbTransient;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 
 /// A bank account with the IBAN as natural primary key. The balance changes
 /// only through [#debit(BigDecimal)] and [#deposit(BigDecimal)];
 /// [#tableName()] is the single source of truth for the native SQL in the
 /// `reporting` BC.
-@Entity
 public class Account {
 
-    @Id
-    @Schema(required = true, examples = "2")
+
     public String iban;
-    @Schema(required = true, examples = "42")
+
     public BigDecimal balance;
 
     protected Account() {
@@ -44,8 +37,6 @@ public class Account {
         return this;
     }
 
-    @JsonbTransient
-    @Schema(hidden = true)
     public boolean isBalancePositive() {
         return this.balance.intValue() > 0;
     }

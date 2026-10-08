@@ -1,13 +1,12 @@
 package airhacks.ebank.HEX_adapter.in.rest.accounting;
 
-import static airhacks.ebank.accounting.Requirement.Rn.R3_1;
-import static airhacks.ebank.accounting.Requirement.Rn.R3_2;
-import static airhacks.ebank.accounting.Requirement.Rn.R3_3;
-import static airhacks.ebank.accounting.Requirement.Rn.R3_4;
+import static airhacks.ebank.HEX_adapter.in.rest.accounting.Requirement.Rn.R3_1;
+import static airhacks.ebank.HEX_adapter.in.rest.accounting.Requirement.Rn.R3_2;
+import static airhacks.ebank.HEX_adapter.in.rest.accounting.Requirement.Rn.R3_3;
+import static airhacks.ebank.HEX_adapter.in.rest.accounting.Requirement.Rn.R3_4;
 
 import airhacks.ebank.HEX_core.usecase.AccountsManagementUc;
-import airhacks.ebank.accounting.Requirement;
-import airhacks.ebank.accounting.control.AccountSummaries;
+import airhacks.ebank.HEX_core.usecase.AccountSummaries;
 import airhacks.ebank.HEX_core.domain.AccountSummary.Owned;
 import airhacks.ebank.HEX_core.domain.AccountSummary.Unowned;
 import airhacks.ebank.HEX_core.domain.AccountSummary.UnknownAccount;
