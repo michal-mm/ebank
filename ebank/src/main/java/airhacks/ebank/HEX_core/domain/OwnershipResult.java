@@ -1,17 +1,15 @@
 package airhacks.ebank.HEX_core.domain;
 
-import airhacks.ebank.customers.control.AccountOwnership;
+import airhacks.ebank.HEX_adapter.out.customers.OwnershipEntity;
 
 /// Closed set of ownership outcomes. Sealing lets the boundary switch
 /// exhaustively, so a new outcome breaks compilation instead of silently
 /// falling through to a wrong HTTP status.
 ///
-/// Returned by [AccountOwnership#own(long,String)] and consumed by
-/// `CustomersResource#ownAccount(long,String)`. The variants carry no status
-/// codes or messages: the control decides *what* happened, the boundary decides
-/// how that reads over HTTP. Rejections are results rather than exceptions
-/// because none of them are exceptional — each is an expected answer to a
-/// request that a client can legitimately send.
+/// Returned by CustomerManagementUc::resolveOwnership(long,String) and
+/// consumed by CustomerManagementUc::ownAccount(long,String). The variants
+/// carry no status codes or messages: the use case decides *what* happened,
+/// the boundary decides how that reads over HTTP.
 public sealed interface OwnershipResult permits OwnershipResult.Owned,
         OwnershipResult.AlreadyOwned,
         OwnershipResult.UnknownCustomer,
@@ -38,7 +36,7 @@ public sealed interface OwnershipResult permits OwnershipResult.Owned,
 
     /// No account with this IBAN (R3.4). The counterpart to [UnknownCustomer];
     /// the account's existence is checked against `accounting` rather than the
-    /// local [airhacks.ebank.customers.entity.Ownership] table, which only
+    /// local [OwnershipEntity] table, which only
     /// knows accounts that are already owned.
     record UnknownAccount(String iban) implements OwnershipResult {
     }

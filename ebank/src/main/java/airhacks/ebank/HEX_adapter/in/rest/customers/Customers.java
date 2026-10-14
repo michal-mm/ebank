@@ -1,24 +1,24 @@
 package airhacks.ebank.HEX_adapter.in.rest.customers;
 
+import static airhacks.ebank.HEX_adapter.in.rest.customers.Requirement.Rn.*;
+
+import airhacks.ebank.HEX_core.domain.Customer;
 import airhacks.ebank.HEX_core.ports.in.CustomersInPort;
-import airhacks.ebank.customers.Requirement;
-import airhacks.ebank.customers.control.AccountOwnership;
-import airhacks.ebank.customers.entity.Customer;
 import jakarta.inject.Inject;
+import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
-import static airhacks.ebank.customers.Requirement.Rn.*;
-import static airhacks.ebank.customers.Requirement.Rn.R2_2;
-
-/// HTTP entry point for the customer lifecycle: registration, lookup, and
-/// account ownership. Only the name check (R1.2) happens here; ownership
-/// decisions are delegated to [AccountOwnership], whose exhaustive result
-/// switch maps every rejection to a distinct HTTP status.
+/// Primary HTTP adapter for the customer lifecycle. Delegates every call to
+/// [CustomersInPort] — no logic lives here.
 @Path("customers")
+@Produces(MediaType.APPLICATION_JSON)
+@Consumes(MediaType.APPLICATION_JSON)
 public class Customers {
 
     @Inject

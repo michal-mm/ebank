@@ -35,4 +35,4 @@
 /// - Customer update and deletion.
 /// - Ownership transfer and co-ownership.
 /// - Account creation, balances, and transactions (owned by `accounting` and `transactions`).
-package airhacks.ebank.customers;
+package airhacks.ebank.HEX_adapter.in.rest.customers;

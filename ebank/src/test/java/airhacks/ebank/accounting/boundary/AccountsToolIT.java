@@ -12,22 +12,21 @@ import java.util.UUID;
 import java.util.stream.Stream;
 
 import airhacks.ebank.HEX_adapter.in.rest.accounting.AccountsTool;
+import airhacks.ebank.HEX_adapter.in.rest.accounting.Requirement;
+import airhacks.ebank.HEX_core.domain.Account;
+import airhacks.ebank.HEX_core.domain.Customer;
 import airhacks.ebank.HEX_core.ports.in.AccountingInPort;
+import airhacks.ebank.HEX_core.ports.out.AccountPersistenceOutPort;
+import airhacks.ebank.HEX_core.ports.out.CustomerPersistenceOutPort;
+import airhacks.ebank.HEX_core.ports.out.OwnershipPersistenceOutPort;
+import io.quarkus.narayana.jta.QuarkusTransaction;
+import io.quarkus.test.junit.QuarkusTest;
+import jakarta.inject.Inject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
-
-import airhacks.ebank.HEX_adapter.in.rest.accounting.Requirement;
-import airhacks.ebank.HEX_core.ports.out.AccountPersistenceOutPort;
-import airhacks.ebank.HEX_core.domain.Account;
-import airhacks.ebank.customers.control.AccountOwnership;
-import airhacks.ebank.customers.control.CustomerRegistrar;
-import airhacks.ebank.customers.entity.Customer;
-import io.quarkus.narayana.jta.QuarkusTransaction;
-import io.quarkus.test.junit.QuarkusTest;
-import jakarta.inject.Inject;
 
 /// Exercises the MCP tool in-process — the protocol plumbing is the
 /// extension's job, this asserts the sentence the model actually receives.
@@ -50,10 +49,10 @@ class AccountsToolIT {
     AccountPersistenceOutPort finder;
 
     @Inject
-    CustomerRegistrar customers;
+    CustomerPersistenceOutPort customers;
 
     @Inject
-    AccountOwnership ownerships;
+    OwnershipPersistenceOutPort ownerships;
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("summarizeAccountCases")
@@ -106,7 +105,7 @@ class AccountsToolIT {
             var account = this.finder.findByIban(iban);
             assertThat(account).as("R3.4").isPresent();
             assertThat(account.get().balance()).as("R3.4").isEqualTo(BALANCE);
-            var stillOwned = this.ownerships.owner(iban);
+            var stillOwned = this.ownerships.findOwner(iban);
             assertThat(stillOwned).as("R3.4").isPresent();
             assertThat(stillOwned.get().id).as("R3.4").isEqualTo(owner.id);
         });
@@ -114,13 +113,14 @@ class AccountsToolIT {
 
     void createAccount(String iban) {
         QuarkusTransaction.requiringNew()
-                .run(() -> this.accountingInPort.initialAccountCreation(new Account(iban, BigDecimal.valueOf(BALANCE))));
+                .run(() -> this.accountingInPort.initialAccountCreation(
+                        new Account(iban, BigDecimal.valueOf(BALANCE))));
     }
 
     Customer registerOwner(String iban) {
         return QuarkusTransaction.requiringNew().call(() -> {
-            var duke = this.customers.register(new Customer("duke"));
-            this.ownerships.own(duke.id, iban);
+            var duke = this.customers.save(new Customer("duke"));
+            this.ownerships.persistOwnership(iban, duke.id);
             return duke;
         });
     }
