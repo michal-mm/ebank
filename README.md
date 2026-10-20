@@ -3,6 +3,7 @@ HEXagonal architecture version of the bank BCE application. Create only as an ex
 
 
 HERE BE DRAGONS (of the BCE ;-)
+....................................
 
 <!-- sbce:generated:start — projection of the specs; do not edit; `apply` regenerates from the system doc + per-BC package docs -->
 > A banking API of cooperating business components for account creation, transaction processing, and reporting.
