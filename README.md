@@ -1,4 +1,6 @@
 # ebank
+HEXagonal architecture version of the bank BCE application. Create only as an exercise, for true BCE like comparison compare against the source of the forked bank repo.
+
 
 <!-- sbce:generated:start — projection of the specs; do not edit; `apply` regenerates from the system doc + per-BC package docs -->
 > A banking API of cooperating business components for account creation, transaction processing, and reporting.
