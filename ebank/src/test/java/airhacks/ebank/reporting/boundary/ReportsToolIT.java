@@ -5,11 +5,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.math.BigDecimal;
 import java.util.UUID;
 
+import airhacks.ebank.HEX_adapter.in.rest.reporting.ReportsTool;
+import airhacks.ebank.HEX_core.ports.in.AccountingInPort;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import airhacks.ebank.accounting.control.AccountCreator;
-import airhacks.ebank.accounting.entity.Account;
+import airhacks.ebank.HEX_core.domain.Account;
 import io.quarkus.narayana.jta.QuarkusTransaction;
 import io.quarkus.test.junit.QuarkusTest;
 import jakarta.inject.Inject;
@@ -31,14 +32,15 @@ public class ReportsToolIT {
     ReportsTool cut;
 
     @Inject
-    AccountCreator accountCreator;
+    AccountingInPort accountingInPort
+            ;
 
     @Test
     @DisplayName("R1.1: the tool returns the IBANs of all accounts")
     void listAccountIBANs() {
         var iban = UUID.randomUUID().toString();
         QuarkusTransaction.requiringNew()
-                .run(() -> this.accountCreator.initialCreation(new Account(iban, BigDecimal.valueOf(42))));
+                .run(() -> this.accountingInPort.initialAccountCreation(new Account(iban, BigDecimal.valueOf(42))));
         var actual = this.cut.listAccountIBANs();
         assertThat(actual)
                 .startsWith("[")

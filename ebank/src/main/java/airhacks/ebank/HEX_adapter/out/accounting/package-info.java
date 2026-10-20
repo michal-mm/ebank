@@ -1,0 +1,17 @@
+/// # Reporting
+/// > Read-only extraction of account data for administrative oversight.
+///
+/// ## Boundary
+/// - `report-account-ibans` — list the identifiers of all accounts
+///   - HTTP: `GET /reports/accounts` — comma-separated plain text
+///   - MCP: `list_account_ibans` — JSON array of IBANs
+///
+/// ## Requirements
+/// ### R1: Report account identifiers
+/// - R1.1 — When accounts exist, the BC shall return the identifiers of all accounts.
+/// - R1.2 — If no accounts exist, then the BC shall indicate absence without error.
+///
+/// ## Out of scope
+/// - Aggregations, balances, and any report beyond the IBAN list.
+/// - Mutating account data (owned by `accounting` and `transactions`).
+package airhacks.ebank.HEX_adapter.out.accounting;
